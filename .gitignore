@@ -25,3 +25,4 @@ all.html
 */docs/bibliography.bib
 *.zip
 node_modules
+.idea/
