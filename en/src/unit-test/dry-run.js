@@ -18,9 +18,23 @@ const hopeThat = (message, callback) => {
 // [main]
 // Run all of the tests that have been asked for and report summary.
 const main = () => {
+  const totalTime = {
+    totalTime: 0,
+    increment(diff) {
+      this.totalTime += diff
+    },
+    toString() {
+      return `${this.totalTime.toPrecision(2)}s`
+    }
+  };
+
   HopeTests.forEach(([message, test]) => {
     try {
+      const before = performance.now();
       test()
+      const diff = performance.now() - before;
+      console.log('Time for test: ' + diff.toPrecision(2) + 's');
+      totalTime.increment(diff);
       HopePass += 1
     } catch (e) {
       if (e instanceof assert.AssertionError) {
@@ -34,6 +48,7 @@ const main = () => {
   console.log(`pass ${HopePass}`)
   console.log(`fail ${HopeFail}`)
   console.log(`error ${HopeError}`)
+  console.log(`total time ${totalTime}`)
 }
 // [/main]
 
