@@ -1,5 +1,6 @@
 import caller from "caller";
 import assert from "assert";
+import { parse } from "node:path";
 
 class Hope {
   constructor() {
@@ -7,6 +8,7 @@ class Hope {
     this.passes = [];
     this.fails = [];
     this.errors = [];
+    this.initMap = new Map();
   }
 
   #cases() {
@@ -30,6 +32,11 @@ class Hope {
     }).join(prefix);
   }
 
+  setup(init) {
+    const { base } = parse(caller());
+    this.initMap.set(base, init);
+  }
+
   test(comment, cb, tags = []) {
     this.todo.push([`${caller()}:: ${comment}`, cb, tags]);
   }
@@ -40,7 +47,9 @@ class Hope {
       : this.todo;
 
     tests.forEach(([comment, test]) => {
+      const { base } = parse(comment.split('::').at(0));
       try {
+        this.initMap.get(base)?.();
         test();
         this.passes.push(comment);
       } catch (e) {
