@@ -16,7 +16,7 @@ export const findNew = async (rootDir, pathHashPairs) => {
   const backedUpFilesSet = new Set(backedUpFiles.map(getBasename));
 
   return pathHashPairs
-    .filter(([, hash]) => !backedUpFilesSet.has(hash))
+    .filter(([file]) => !backedUpFilesSet.has(file))
     .reduce((acc, [path, hash]) => {
     acc[hash] = path;
     return acc;

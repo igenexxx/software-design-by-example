@@ -1,0 +1,10 @@
+./aaa.js,bdbdc5bc614b3003e6e5a275ea8482a9b9059698
+./backup.js,f57cb020f871d7c45d1934d094c0ab5c6035f104
+./check_backup.js,f91858b9d503ec437c424cd651624e9b8c63bfa2
+./check_git.js,1edca310c2a6e348c4c96da6840df2587dc602da
+./git_proto.js,d2adb9ffa1405f169d60f89e7dcd3d4fd73976d3
+./hash.js,4334acf0af15b4733731431a4ecc9b94ca74edd2
+./sha1_cli.js,a008889dad1d894940b7f3a53b4ae60c1b02e283
+./sha1_file.js,dfc5c51353ca41fef3f95f175721c115778a4377
+./sha1_stream.js,41a23a9ce67eec6d4b58a359cb0f69d044733de8
+./utils.js,68bbd579daa1c6ba533b37564e81ab456226cf21
