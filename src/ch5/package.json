@@ -2,7 +2,7 @@
   "name": "ch5",
   "version": "1.0.0",
   "description": "",
-  "main": "aaa.js",
+  "main": "test_files/aaa.js",
   "scripts": {
     "test": "node --experimental-vm-modules $(npm root)/.bin/jest"
   },

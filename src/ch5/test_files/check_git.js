@@ -1,4 +1,4 @@
-import {hashExisting} from "./git_proto.js";
+import {hashExisting} from "../git_proto.js";
 
 const root = process.argv[2];
 

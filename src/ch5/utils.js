@@ -1,5 +1,5 @@
 import {stat} from "node:fs/promises";
-import {readFile} from "node:fs/promises";
+import {readFile, writeFile} from "node:fs/promises";
 import glob from "glob-promise";
 import {basename} from "node:path";
 
@@ -22,3 +22,18 @@ export const findNew = async (rootDir, pathHashPairs) => {
     return acc;
   }, {});
 }
+
+class Counter {
+  async getCount() {
+    return await readFile('./.counter/_counter', 'utf-8');
+  }
+
+  async increment() {
+    const count = await this.getCount();
+    const newCount = Number(count) + 1;
+    await writeFile('./.counter/_counter', newCount.toString(), 'utf-8');
+    return newCount;
+  }
+}
+
+export const counter = new Counter();

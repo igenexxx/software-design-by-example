@@ -1,4 +1,4 @@
-import { getHash } from './hash.js';
+import { getHash } from '../hash.js';
 
 const text = process.argv[2];
 

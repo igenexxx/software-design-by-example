@@ -1,17 +1,17 @@
 import { copyFile, writeFile } from "node:fs/promises";
 import {findNew} from "./utils.js";
 import {hashExisting} from "./git_proto.js";
+import { counter } from "./utils.js";
 
-const backup = async (src, dst, timestamp = null) => {
-  if (timestamp === null) {
-    timestamp = Math.round((new Date()).getTime() / 1000)
-  }
-  timestamp = String(timestamp).padStart(10, '0')
+const backup = async (src, dst, count = counter) => {
+  const currentCount = (await count.getCount()).padStart(10, '0')
 
   const existing = await hashExisting(src)
   const needToCopy = await findNew(dst, existing)
   await copyFiles(dst, needToCopy)
-  await saveManifest(dst, timestamp, existing)
+  await saveManifest(dst, currentCount, existing)
+
+  await count.increment();
 }
 
 const copyFiles = async (dst, needToCopy) => {
@@ -32,4 +32,4 @@ const saveManifest = async (dst, timestamp, pathHash) => {
   await writeFile(manifest, content, 'utf-8')
 }
 
-export default backup
+export default backup;
