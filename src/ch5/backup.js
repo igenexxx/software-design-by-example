@@ -9,7 +9,7 @@ const backup = async (src, dst, count = counter) => {
   const existing = await hashExisting(src)
   const needToCopy = await findNew(dst, existing)
   await copyFiles(dst, needToCopy)
-  await saveManifest(dst, currentCount, existing)
+  await safeJSONManifest(dst, currentCount, existing)
 
   await count.increment();
 }
@@ -24,12 +24,20 @@ const copyFiles = async (dst, needToCopy) => {
   return Promise.all(promises)
 }
 
-const saveManifest = async (dst, timestamp, pathHash) => {
+const saveCSVManifest = async (dst, timestamp, pathHash) => {
   pathHash = pathHash.sort()
   const content = pathHash.map(
     ([path, hash]) => `${path},${hash}`).join('\n')
   const manifest = `${dst}/${timestamp}.csv`
   await writeFile(manifest, content, 'utf-8')
+}
+
+const safeJSONManifest = async (dst, timestamp, pathHash) => {
+  const manifest = `${dst}/${timestamp}.json`;
+  const content = [...pathHash].sort().reduce((acc, [path, hash]) => ({...acc, [hash]: path }), {});
+  const stringifiedContent = JSON.stringify(content, null, 2);
+
+  await writeFile(manifest, stringifiedContent, 'utf-8');
 }
 
 export default backup;
