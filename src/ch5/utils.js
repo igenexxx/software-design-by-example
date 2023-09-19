@@ -14,6 +14,7 @@ export const findNew = async (rootDir, pathHashPairs) => {
   const pattern = `${rootDir}/*.bck`;
   const backedUpFiles = await glob(pattern);
   const backedUpFilesSet = new Set(backedUpFiles.map(getBasename));
+  const user = process.env.USER;
 
   return pathHashPairs
     .filter(([, hash]) => !backedUpFilesSet.has(hash))
